@@ -326,7 +326,7 @@ case $host_os in
 esac
 
 AC_CHECK_SIZEOF([long])
-if test $ac_cv_sizeof_long >=8; then
+if test $ac_cv_sizeof_long -ge 8; then
 	LD_CLASSIC=
 else
 	LD_CLASSIC=ld
