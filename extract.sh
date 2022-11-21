@@ -84,10 +84,12 @@ if [ -d "${DISTDIR}" ]; then
     exit 1
 fi
 
-mkdir -p ${DISTDIR}
-tar ${TARSTRIP}=1 -zxf ${CCTOOLSDISTFILE} -C ${DISTDIR}
 mkdir -p ${DISTDIR}/ld64
-tar ${TARSTRIP}=1 -zxf ${LD64DISTFILE} -C ${DISTDIR}/ld64
+# tar ${TARSTRIP}=1 -zxf ${CCTOOLSDISTFILE} -C ${DISTDIR}
+# tar ${TARSTRIP}=1 -zxf ${LD64DISTFILE} -C ${DISTDIR}/ld64
+(cd cctools && git archive cctools-${CCTOOLSVERS} --prefix="${DISTDIR}/" ) | tar xf -
+(cd ld64 && git archive ld64-${LD64VERS} --prefix="${DISTDIR}/ld64/" ) | tar xf -
+
 rm -rf ${DISTDIR}/ld64/FireOpal
 find ${DISTDIR}/ld64 ! -perm +200 -exec chmod u+w {} \;
 find ${DISTDIR}/ld64/doc/ -type f -exec cp "{}" ${DISTDIR}/man \;

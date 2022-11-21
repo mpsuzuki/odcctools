@@ -1,0 +1,6 @@
+[submodule "cctools"]
+	path = cctools
+	url = https://github.com/apple-oss-distributions/cctools.git
+[submodule "ld64"]
+	path = ld64
+	url = https://github.com/apple-oss-distributions/ld64.git
