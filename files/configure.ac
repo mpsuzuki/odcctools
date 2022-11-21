@@ -287,6 +287,10 @@ AC_CHECK_FUNCS([strmode qsort_r qsort getattrlist NSIsSymbolNameDefined strlcpy 
 AC_CHECK_HEADERS([CommonCrypto/CommonDigest.h],[],[SSL_LIBS=-lssl])
 AC_SUBST(SSL_LIBS)
 
+dnl ld64 requires LLVM. if missing, skip ld64
+dnl XXX --with-llvm=<prefix> is expected
+AC_CHECK_HEADERS([llvm-c/lto.h],[LD64=ld64],[LD64=])
+
 AC_CHECK_DECLS([getc_unlocked, strlcpy, strlcat])
 AH_VERBATIM([HAVE_DECL_GETC_UNLOCKED_REPLACEMENT],
 [/* For systems that don't have getc_unlocked, use getc  */
@@ -331,7 +335,7 @@ if test $ac_cv_sizeof_long -ge 8; then
 else
 	LD_CLASSIC=ld
 fi
-COMPONENTS="ar as include libstuff libmacho ${LD_CLASSIC} ld64 man misc otool"
+COMPONENTS="ar as include libstuff libmacho ${LD_CLASSIC} ${LD64} man misc otool"
 AC_SUBST([COMPONENTS], [$COMPONENTS])
 
 AC_CHECK_FUNC([uuid_generate_random],[],
